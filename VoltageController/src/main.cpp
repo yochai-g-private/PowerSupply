@@ -9,6 +9,7 @@ enum IoPins
     BUZZER_PIN      = D10,
     WARNING_LED_PIN = D4,
     BUILTIN_LED_PIN = D17,
+    USE_VL_11_5_PIN = D14,
     VOLTAGE_ANA_PIN = A0,
 };
 
@@ -37,6 +38,7 @@ static DigitalOutputPin			buzzer(BUZZER_PIN);
 static DigitalOutputPin			warning_led(WARNING_LED_PIN);
 static RevertedDigitalOutputPin	builtin_led(BUILTIN_LED_PIN);
 static AnalogInputPin           voltage_sensor(VOLTAGE_ANA_PIN);
+static DigitalPullupInputPin    use_VL_11_5(USE_VL_11_5_PIN);
 
 //-----------------------------------------------------
 //	Other...
@@ -74,7 +76,8 @@ void setup()
     warning_led.Off();
 
     LOGGER << "Initial voltage: " << get_voltage() << NL;
-
+    LOGGER << "use_VL_11_5 is : " << ONOFF(use_VL_11_5.Get()).Get() << NL;
+    
     builtin_led_toggler.Start(builtin_led, Toggler::OnTotal(200, 10000));
     voltage_check_timer.StartForever(10, SECS);
 
@@ -112,7 +115,7 @@ static void set_toggler_array( uint on, uint off, uint freq, uint16_t a_count, u
 //--------------------------------------------------------------
 static void stop_alarm()
 {
-    if(buzzer_toggler.IsStarted())
+    if(light_toggler.IsStarted())
     {
         buzzer_toggler.Stop();
         buzzer.Off();
@@ -157,6 +160,11 @@ static void check_voltage()
     if(v_idx)
         return;
 
+    builtin_led.Toggle(); delay(100);
+    builtin_led.Toggle(); delay(100);
+    builtin_led.Toggle(); delay(100);
+    builtin_led.Toggle(); delay(100);
+
     float pv = previous_voltage;
 
     previous_voltage = current_voltage;
@@ -200,15 +208,19 @@ static void check_voltage()
 
     stop_alarm();
 
+    bool both = a_count != 1 || use_VL_11_5.Get();
+
     enum { NOIZE = 500, SILENCE = 1000, BUZZER_FREQ = 60000 };
     enum { LIGHT = 350, DARK    =  650, LIGHT_FREQ  = 10000 };
 
     static unsigned long buzzer_a[13] = {};
     static unsigned long light_a[13] = {};
 
+    if(both)
     set_toggler_array(NOIZE, SILENCE, BUZZER_FREQ, a_count, buzzer_a );
     set_toggler_array(LIGHT, DARK,    LIGHT_FREQ,  a_count, light_a );
 
+    if(both)
     buzzer_toggler.Start(buzzer,      buzzer_a, a_count * 2);
     light_toggler .Start(warning_led, light_a,  a_count * 2);
 }
