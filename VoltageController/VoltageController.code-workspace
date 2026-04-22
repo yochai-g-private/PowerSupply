@@ -1,0 +1,61 @@
+{
+    "folders": [
+        {
+            "name": "VoltageController",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "bitset": "cpp",
+            "random": "cpp",
+            "atomic": "cpp",
+            "array": "cpp",
+            "string_view": "cpp",
+            "initializer_list": "cpp",
+            "regex": "cpp",
+            "utility": "cpp",
+            "ranges": "cpp",
+            "streambuf": "cpp",
+            "typeinfo": "cpp",
+            "*.tcc": "cpp",
+            "cctype": "cpp",
+            "clocale": "cpp",
+            "cmath": "cpp",
+            "cstdio": "cpp",
+            "cstdlib": "cpp",
+            "cstring": "cpp",
+            "ctime": "cpp",
+            "cwchar": "cpp",
+            "cwctype": "cpp",
+            "sstream": "cpp",
+            "memory_resource": "cpp",
+            "functional": "cpp",
+            "type_traits": "cpp",
+            "compare": "cpp",
+            "memory": "cpp",
+            "chrono": "cpp",
+            "string": "cpp",
+            "optional": "cpp",
+            "istream": "cpp",
+            "ostream": "cpp",
+            "ratio": "cpp",
+            "system_error": "cpp",
+            "tuple": "cpp",
+            "deque": "cpp",
+            "list": "cpp",
+            "unordered_map": "cpp",
+            "unordered_set": "cpp",
+            "vector": "cpp",
+            "input.h": "c",
+            "aht.h": "c",
+            "common.h": "c",
+            "limits": "cpp",
+            "xmemory": "cpp",
+            "nyg.h": "c",
+            "defines.h": "c",
+            "ioutput.h": "c",
+            "types.h": "c"
+        }
+       }
+}
